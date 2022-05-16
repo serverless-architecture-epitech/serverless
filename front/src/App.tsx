@@ -1,10 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { initializeApp } from "firebase/app";
-import { Router, Route, Switch } from 'react-router-dom';
+import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 import Home from 'src/pages/Home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import useAuth from './utils/useAuth';
+import Login from './pages/Login';
+import Register from './pages/Register';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB1lKjBNKf6MIA4TCbqkP2FwbdRIsRVUJs",
@@ -17,21 +20,20 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-const history = createBrowserHistory();
 const app = initializeApp(firebaseConfig);
 
 function App() {
+  const auth = useAuth();
+
   return (
-    <>
+    <BrowserRouter>
       <ToastContainer />
-      <Router history={history}>
-        <Switch>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
-    </>
+      <Routes>
+        <Route index element={!auth ? <Navigate to={'/login'} /> : <Home />} />
+        <Route path="/login" element={auth ? <Navigate to={'/'} /> : <Login />} />
+        <Route path="/register" element={auth ? <Navigate to={'/'} /> : <Register />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
