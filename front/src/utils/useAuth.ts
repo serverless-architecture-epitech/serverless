@@ -1,4 +1,4 @@
-import { getAuth, User } from "firebase/auth";
+import { getAuth, sendEmailVerification, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
 export default function useAuth() {

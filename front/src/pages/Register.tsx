@@ -1,8 +1,7 @@
-import styled from 'styled-components';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
 import React, { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
-import { Link } from 'react-router-dom';
+import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
 
 export default () => {
     // a react callback function to login with firebase called login
@@ -23,7 +22,10 @@ export default () => {
         }
 
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
+            const user = await createUserWithEmailAndPassword(auth, email, password);
+
+            sendEmailVerification(user.user);
+
             toast.success('Successfully registered');
         } catch (error) {
             // @ts-ignore
@@ -32,57 +34,15 @@ export default () => {
     }, []);
     
     return (
-    <StyledHome>
+    <StyledContainer>
         <h1>Register</h1>
         <StyledAuthForm onSubmit={register}>
             <StyledInput name={'email'} placeholder="Email" />
             <StyledInput name={'password'} placeholder="Password" type={'password'} />
             <StyledInput name={'passwordConfirm'} placeholder="Password confirmation" type={'password'} />
             <StyledButton>Register</StyledButton>
-            <Link to="/login">Already have an account?</Link>
+            <StyledRedirectLink to="/login">Already have an account?</StyledRedirectLink>
         </StyledAuthForm>
-    </StyledHome>
+    </StyledContainer>
     );
 }
-
-const StyledHome = styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    width: 100vw;
-    background-color: #fafafa;
-`;
-
-const StyledAuthForm = styled.form`
-    display: flex;  
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    max-width: 400px;
-    margin-top: 20px;
-`;
-
-const StyledInput = styled.input`
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-`;
-
-const StyledButton = styled.button`
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    background-color: #fff;
-    color: #000;
-`;
-
-const LoginLink = styled.a`
-    color: #000;
-`;
