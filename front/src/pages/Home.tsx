@@ -7,59 +7,8 @@ import useAuth from "src/utils/useAuth";
 import styled from "styled-components";
 import { getStorage } from 'firebase/storage';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
-
-function App() {
-  const [imgUrl, setImgUrl] = useState<string | null>(null);
-  const [progresspercent, setProgresspercent] = useState(0);
-
-  const handleSubmit: React.FormEventHandler<HTMLFormElement> = async (e) => {
-    e.preventDefault()
-    const storage = getStorage();
-    const auth = getAuth();
-    // @ts-ignore
-    const file = e.target[0]?.files[0]
-    if (!file) return;
-
-    const uid = await auth.currentUser?.uid;
-    const storageRef = ref(storage, `/files/${uid}/${file.name}`);
-    const uploadTask = uploadBytesResumable(storageRef, file);
-
-    uploadTask.on("state_changed",
-      (snapshot) => {
-        const progress =
-          Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
-        setProgresspercent(progress);
-      },
-      (error) => {
-        alert(error);
-      },
-      () => {
-        getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-          setImgUrl(downloadURL)
-        });
-      }
-    );
-  }
-
-  return (
-    <div className="App">
-      <form onSubmit={handleSubmit} className='form'>
-        <input type='file' />
-        <button type='submit'>Upload</button>
-      </form>
-      {
-        !imgUrl &&
-        <div className='outerbar'>
-          <div className='innerbar' style={{ width: `${progresspercent}%` }}>{progresspercent}%</div>
-        </div>
-      }
-      {
-        imgUrl &&
-        <img src={imgUrl} alt='uploaded file' height={200} />
-      }
-    </div>
-  );
-}
+import FileList from "src/components/FileList";
+import Upload from "src/components/Upload";
 
 const EmailVerify = () => {
     const user = useAuth();
@@ -98,7 +47,11 @@ const EmailVerify = () => {
 export default () => {
     const user = useAuth();
 
-    if (!user?.emailVerified) {
+    if (!user) {
+        return null;
+    }
+
+    if (!user.emailVerified) {
         return <EmailVerify />;
     }
 
@@ -112,10 +65,10 @@ export default () => {
             </Sidebar>
             <Container>
                 <Email>
-                    {user?.email}
+                    connected as : <b>{user?.email}</b>
                 </Email>
+                <FileList />
             </Container>
-            <App />
         </StyledApp>
     );
 }
@@ -168,7 +121,7 @@ const UserProfileButton = styled.div`
 const Container = styled.div`
     flex: 1;
     height: 100%;
-    padding: 20px;
+    padding: 40px;
     box-sizing: border-box;
 `;
 
