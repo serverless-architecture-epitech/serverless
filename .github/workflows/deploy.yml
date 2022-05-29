@@ -19,7 +19,7 @@ jobs:
       - name: Install Dependencies
         run: cd front/ && npm install
       - name: Build
-        run: npm run build-prod
+        run: cd front/ && npm run build-prod
       - name: Archive Production Artifact
         uses: actions/upload-artifact@v3
         with:
