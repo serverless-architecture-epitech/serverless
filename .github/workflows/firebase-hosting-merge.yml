@@ -18,3 +18,4 @@ jobs:
           firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERVERLESS_14C0C }}'
           channelId: live
           projectId: serverless-14c0c
+          path: "./front/"
