@@ -31,9 +31,9 @@ function App() {
       <ToastContainer />
       <Routes>
         <Route index element={!auth ? <Navigate to={'/login'} /> : <Home />} />
+        <Route path="/chat" element={!auth ? <Navigate to={'/login'} /> : <Chat />} />
         <Route path="/login" element={auth ? <Navigate to={'/'} /> : <Login />} />
         <Route path="/register" element={auth ? <Navigate to={'/'} /> : <Register />} />
-        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );

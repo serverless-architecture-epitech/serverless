@@ -8,7 +8,7 @@ import styled from "styled-components";
 import FileList from "src/components/FileList";
 import Sidebar from "src/components/Sidebar";
 
-const EmailVerify = () => {
+export const EmailVerify = () => {
     const user = useAuth();
     const [sent, setSent] = useState(false);
 

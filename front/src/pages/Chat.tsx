@@ -7,40 +7,7 @@ import useAuth from "src/utils/useAuth";
 import styled from "styled-components";
 import Channel from "src/components/Channel";
 import Sidebar from "src/components/Sidebar";
-
-const EmailVerify = () => {
-	const user = useAuth();
-	const [sent, setSent] = useState(false);
-
-	const sendMail = useCallback(() => {
-		if (user) {
-			sendEmailVerification(user)
-				.then(() => {
-					toast.success("Email verification sent");
-					setSent(true);
-
-					setTimeout(() => {
-						setSent(false);
-					}, 5000);
-				})
-				.catch(() => {
-					toast.error("Error sending email verification");
-				})
-		}
-	}, [user]);
-
-	return (
-		<StyledContainer>
-			<h1>Verify your email</h1>
-			<p>Please verify <b>{user?.email}</b> before continuing.</p>
-			{!sent ? (
-				<EmailVerification onClick={sendMail}>Resend verification email</EmailVerification>
-			) : (
-				<EmailVerification style={{ backgroundColor: '#07bc0c', color: 'white', cursor: 'default' }}>Email verification sent</EmailVerification>
-			)}
-		</StyledContainer>
-	);
-}
+import { EmailVerify } from "./Home";
 
 export default () => {
 	const user = useAuth();
