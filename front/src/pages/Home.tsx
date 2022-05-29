@@ -9,6 +9,9 @@ import { getStorage } from 'firebase/storage';
 import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import FileList from "src/components/FileList";
 import Upload from "src/components/Upload";
+import Button from "../components/Button";
+// @ts-ignore
+import {Link, Navigate, Redirect} from "react-router-dom";
 
 const EmailVerify = () => {
     const user = useAuth();
@@ -62,6 +65,7 @@ export default () => {
                     const auth = getAuth();
                     auth.signOut();
                 }}>Logout</LogoutButton>
+                <Button as={Link} to={'/chat'}>Chat</Button>
             </Sidebar>
             <Container>
                 <Email>
@@ -88,7 +92,6 @@ const Sidebar = styled.div`
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    justify-content: space-between;
 `
 
 const LogoutButton = styled.button`
@@ -105,6 +108,7 @@ const LogoutButton = styled.button`
     &:hover {
         background-color: /* hover red button */ #cc0000;
     }
+    font-size: 16px;
 `;
 
 const Email = styled.div`

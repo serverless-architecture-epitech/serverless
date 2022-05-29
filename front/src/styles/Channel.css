@@ -1,0 +1,61 @@
+.Channel {
+    max-width: 50%;
+}
+
+form {
+    bottom: 0;
+    width: 100%;
+    display: flex;
+}
+
+input {
+    width: 100%;
+    border-radius: 25px 0 0 25px;
+}
+
+button {
+    background-color: var(--toastify-color-success);
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 0 25px 25px 0;
+}
+
+button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+p.msg {
+    max-width: 500px;
+    margin-bottom: 8px;
+    margin-top: 8px;
+    line-height: 24px;
+    padding: 10px 20px;
+    border-radius: 25px;
+    position: relative;
+    color: white;
+    text-align: center;
+}
+
+.message {
+    display: flex;
+    align-items: center;
+}
+
+.sent {
+    flex-direction: row-reverse;
+}
+
+.sent p {
+    color: white;
+    background: #0b93f6;
+    align-self: flex-end;
+}
+
+.received p {
+    background: #e5e5ea;
+    color: black;
+}
