@@ -2,7 +2,7 @@
 # https://github.com/firebase/firebase-tools
 
 name: Deploy to Firebase Hosting on merge
-'on':
+"on":
   push:
     branches:
       - "**"
@@ -12,10 +12,11 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - run: cd front/ && npm ci && npm run build
+      - run: ls && ls build/
       - uses: FirebaseExtended/action-hosting-deploy@v0
         with:
-          repoToken: '${{ secrets.GITHUB_TOKEN }}'
-          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERVERLESS_14C0C }}'
+          repoToken: "${{ secrets.GITHUB_TOKEN }}"
+          firebaseServiceAccount: "${{ secrets.FIREBASE_SERVICE_ACCOUNT_SERVERLESS_14C0C }}"
           channelId: live
           projectId: serverless-14c0c
           entryPoint: "./front/"
