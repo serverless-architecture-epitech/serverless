@@ -8,6 +8,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import useAuth from './utils/useAuth';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import Chat from './pages/Chat';
 
 const firebaseConfig = {
   apiKey: "AIzaSyB1lKjBNKf6MIA4TCbqkP2FwbdRIsRVUJs",
@@ -32,6 +33,7 @@ function App() {
         <Route index element={!auth ? <Navigate to={'/login'} /> : <Home />} />
         <Route path="/login" element={auth ? <Navigate to={'/'} /> : <Login />} />
         <Route path="/register" element={auth ? <Navigate to={'/'} /> : <Register />} />
+        <Route path="/chat" element={<Chat />} />
       </Routes>
     </BrowserRouter>
   );
