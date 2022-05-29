@@ -3,6 +3,7 @@ import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
     const register = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         e.preventDefault();

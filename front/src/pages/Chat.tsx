@@ -1,7 +1,7 @@
-import { sendEmailVerification } from "firebase/auth";
+/*import { sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
 import { useCallback } from "react";
-import { toast } from "react-toastify";
+import { toast } from "react-toastify";*/
 import { StyledContainer } from "src/components/styled";
 import useAuth from "src/utils/useAuth";
 import styled from "styled-components";
@@ -9,6 +9,7 @@ import Channel from "src/components/Channel";
 import Sidebar from "src/components/Sidebar";
 import { EmailVerify } from "./Home";
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
 	const user = useAuth();
 
@@ -48,6 +49,7 @@ const Container = styled.div`
     box-sizing: border-box;
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const EmailVerification = styled.button`
     background-color: #fff;
     border: 1px solid #00000018;

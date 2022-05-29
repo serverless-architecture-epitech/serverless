@@ -8,6 +8,7 @@ interface UploadProps {
     onFileUploaded?: (item: StorageReference) => void;
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default ({ onFileUploaded }: UploadProps) => {
     const [progresspercent, setProgresspercent] = useState(0);
     const [uploading, setUploading] = useState(false);
@@ -67,6 +68,7 @@ export default ({ onFileUploaded }: UploadProps) => {
                 setFilename(file.name);
             }
         }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [inputRef]);
 
     return (

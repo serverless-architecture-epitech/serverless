@@ -42,6 +42,7 @@ export const EmailVerify = () => {
     );
 }
 
+// eslint-disable-next-line import/no-anonymous-default-export
 export default () => {
     const user = useAuth();
 
@@ -75,6 +76,7 @@ const StyledApp = styled(StyledContainer)`
 const Email = styled.div`
 `;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UserProfileButton = styled.div`
     display: flex;
     flex-direction: row;

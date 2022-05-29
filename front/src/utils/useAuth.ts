@@ -1,3 +1,4 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { getAuth, sendEmailVerification, User } from "firebase/auth";
 import { useEffect, useState } from "react";
 
