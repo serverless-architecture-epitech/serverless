@@ -16,8 +16,6 @@ exports.createUser = functions.https.onCall(async (data, context) => {
     password: password,
     displayName: name,
   });
-  //  const user = await createUserWithEmailAndPassword(admin.auth(), email, password);
-  admin.auth().sendEmailVerification(user.user);
 
   functions.logger.log("User", user);
 
