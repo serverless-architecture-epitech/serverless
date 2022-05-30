@@ -19,7 +19,7 @@ exports.addToGroups = functions.firestore
   .onCreate((snap, context) => {
     const original = snap.data().original;
 
-    functions.logger.log("Data", context.params.user, original);
+    functions.logger.log("Data", context.params.user, original, snap.data(), snap.id);
   });
 
 // export const helloWorld = functions.https.onRequest((request, response) => {
