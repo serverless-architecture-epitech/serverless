@@ -1,13 +1,11 @@
 import React, {useEffect, useRef, useState} from 'react';
 import '../styles/Channel.css';
 
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/firestore';
-import 'firebase/compat/auth';
-
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import styled from "styled-components";
+import {initializeApp} from "firebase/app";
+import {getAuth} from "firebase/auth";
+import {addDoc, collection, getFirestore, limit, orderBy, query, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyB1lKjBNKf6MIA4TCbqkP2FwbdRIsRVUJs",
@@ -17,14 +15,13 @@ const firebaseConfig = {
     messagingSenderId: "305705479418",
     appId: "1:305705479418:web:da10279c3d3d77b32aed43"
 };
-const app = firebase.initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
-const auth = firebase.auth();
-const firestore = firebase.firestore();
+const auth = getAuth();
+const firestore = getFirestore();
 
 function Channel() {
-    //const [user] = useAuthState(auth);
-
+    auth.currentUser?.getIdToken(true);
     return (
       <div className="Channel">
           <StyledTitle>Chat</StyledTitle>
@@ -35,15 +32,15 @@ function Channel() {
     );
 }
 
-const getUsername = (o: any) => o?.displayName || o?.email || o?.username || o?.uid
+const getUsername = (o: any) => o?.name || o?.displayName || o?.email || o?.username || o?.uid
 
 function ChatRoom() {
-    const dummy = useRef();
-    const messagesRef = firestore.collection('messages');
-    let query = messagesRef.orderBy('createdAt').limit(25);
+    const elemRef = useRef();
+    const messagesRef = collection(firestore, 'messages');
+    let q = query(messagesRef, orderBy('createdAt'));
 
     // @ts-ignore
-    const [messages] = useCollectionData(query, { idField: 'id' });
+    const [messages] = useCollectionData(q);
     const [formValue, setFormValue] = useState('');
 
     // @ts-ignore
@@ -53,12 +50,12 @@ function ChatRoom() {
         // @ts-ignore
         const { uid } = auth.currentUser;
 
-        await messagesRef.add({
+        await addDoc(messagesRef,{
             text: formValue,
-            createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+            createdAt: serverTimestamp(),
             uid,
-            username: getUsername(auth) || uid
-        })
+            username: getUsername(auth.currentUser) || uid
+        });
 
         setFormValue('');
         // @ts-ignore
@@ -81,7 +78,7 @@ function ChatRoom() {
 
 // @ts-ignore
 function ChatMessage(props) {
-    const { text, uid, username } = props.message;
+    const { text, uid } = props.message;
 
     // @ts-ignore
     const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';

@@ -1,7 +1,8 @@
-import { getAuth, createUserWithEmailAndPassword, sendEmailVerification } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
 import React, { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
+import {addDoc, collection, getFirestore} from "firebase/firestore";
 
 export default () => {
     // a react callback function to login with firebase called login
@@ -15,6 +16,8 @@ export default () => {
         const password = e.target.password.value;
         // @ts-ignore
         const passwordConfirm = e.target.passwordConfirm.value;
+        // @ts-ignore
+        const name = e.target.name.value;
 
         if (password !== passwordConfirm) {
             toast.error('Password does not match');
@@ -26,17 +29,30 @@ export default () => {
 
             sendEmailVerification(user.user);
 
+            updateProfile(user.user, {
+                displayName: name
+            }).catch((error: any) => {
+                console.log('Profile not updated: ' + error);
+            });
+
+            const usersRef = collection(getFirestore(), 'users');
+            addDoc(usersRef, {
+                uid: user.user.uid,
+                name
+            });
+
             toast.success('Successfully registered');
         } catch (error) {
             // @ts-ignore
             toast.error(error.message);
         }
     }, []);
-    
+
     return (
     <StyledContainer>
         <h1>Register</h1>
         <StyledAuthForm onSubmit={register}>
+            <StyledInput name={'name'} placeholder="John Doe" />
             <StyledInput name={'email'} placeholder="Email" />
             <StyledInput name={'password'} placeholder="Password" type={'password'} />
             <StyledInput name={'passwordConfirm'} placeholder="Password confirmation" type={'password'} />

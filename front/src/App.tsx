@@ -33,7 +33,7 @@ function App() {
         <Route index element={!auth ? <Navigate to={'/login'} /> : <Home />} />
         <Route path="/login" element={auth ? <Navigate to={'/'} /> : <Login />} />
         <Route path="/register" element={auth ? <Navigate to={'/'} /> : <Register />} />
-        <Route path="/chat" element={<Chat />} />
+        <Route path="/chat" element={!auth ? <Navigate to={'/login'} /> : <Chat />} />
       </Routes>
     </BrowserRouter>
   );

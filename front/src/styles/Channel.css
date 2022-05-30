@@ -6,6 +6,7 @@ form {
     bottom: 0;
     width: 100%;
     display: flex;
+    margin-top: 8px;
 }
 
 input {
