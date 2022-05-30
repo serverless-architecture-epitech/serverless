@@ -24,6 +24,8 @@ const Sidebar = () => {
         }}>Logout</LogoutButton>
         <SidebarButton as={Link} to={'/'}>Upload</SidebarButton>
         <SidebarButton as={Link} to={'/chat'}>Chat</SidebarButton>
+        <SidebarButton as={Link} to={'/admin'}>Admin</SidebarButton>
+
     </StyledSidebar>
 }
 
