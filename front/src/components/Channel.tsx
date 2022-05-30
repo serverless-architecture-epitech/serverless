@@ -5,7 +5,7 @@ import { useCollectionData } from 'react-firebase-hooks/firestore';
 import styled from "styled-components";
 import {initializeApp} from "firebase/app";
 import {getAuth} from "firebase/auth";
-import {addDoc, collection, getFirestore, limit, orderBy, query, serverTimestamp } from 'firebase/firestore';
+import {addDoc, collection, getFirestore, orderBy, query, serverTimestamp } from 'firebase/firestore';
 
 const firebaseConfig = {
     apiKey: "AIzaSyB1lKjBNKf6MIA4TCbqkP2FwbdRIsRVUJs",
