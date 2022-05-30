@@ -17,7 +17,14 @@ exports.createUser = functions.https.onCall(async (data, context) => {
   const name = data.name;
   const auth = context.auth;
 
-  const user = await createUserWithEmailAndPassword(auth, email, password);
+  if (!auth) {
+    throw new functions.https.HttpsError(
+      "failed-precondition",
+      "The function must be called while authenticated."
+    );
+  }
+
+  const user = await createUserWithEmailAndPassword(admin.auth(), email, password);
   sendEmailVerification(user.user);
   updateProfile(user.user, {
     displayName: name,
@@ -25,11 +32,11 @@ exports.createUser = functions.https.onCall(async (data, context) => {
     console.log("Profile not updated: " + error);
   });
 
-  const doc = doc(getFirestore(), 'users', user.uid)
+  const _doc = doc(getFirestore(), 'users', auth.uid)
   return admin
     .firestore()
     .ref("users")
-    .setDoc(doc, {
+    .setDoc(_doc, {
       uid: user.user.uid,
       name: name,
     })
@@ -37,8 +44,8 @@ exports.createUser = functions.https.onCall(async (data, context) => {
       console.log("New User written");
       return "User created";
     })
-    .catch((error) => {
-      throw new functions.https.HttpsError("unknow", error.message, error);
+    .catch((error: Error) => {
+      throw new functions.https.HttpsError("unknown", error.message, error);
     });
 });
 
@@ -67,6 +74,10 @@ exports.verifMessage = functions.firestore
     );
   });
 
+
+function getFirestore(): any {
+    throw new Error("Function not implemented.");
+}
 // export const helloWorld = functions.https.onRequest((request, response) => {
 //   functions.logger.info("Hello logs!", {structuredData: true});
 //   response.send("Hello from Firebase!");
