@@ -2,7 +2,7 @@ import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateP
 import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
-import {addDoc, collection, getFirestore} from "firebase/firestore";
+import { doc, getFirestore, setDoc } from "firebase/firestore";
 
 const Register = () => {
     // a react callback function to login with firebase called login
@@ -35,9 +35,8 @@ const Register = () => {
                 console.log('Profile not updated: ' + error);
             });
 
-            const usersRef = collection(getFirestore(), 'users');
-            addDoc(usersRef, {
-                uid: user.user.uid,
+            const userRef = doc(getFirestore(), 'users', user.user.uid);
+            setDoc(userRef, {
                 name
             });
 
