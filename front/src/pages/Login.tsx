@@ -3,7 +3,7 @@ import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
 
-export default () => {
+const Login = () => {
     const register = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         e.preventDefault();
         const auth = getAuth();
@@ -33,3 +33,5 @@ export default () => {
         </StyledContainer>
     );
 }
+
+export default Login;

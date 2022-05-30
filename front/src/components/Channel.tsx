@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import '../styles/Channel.css';
 
 import { useCollectionData } from 'react-firebase-hooks/firestore';
@@ -15,6 +15,7 @@ const firebaseConfig = {
     messagingSenderId: "305705479418",
     appId: "1:305705479418:web:da10279c3d3d77b32aed43"
 };
+
 initializeApp(firebaseConfig);
 
 const auth = getAuth();
@@ -35,7 +36,6 @@ function Channel() {
 const getUsername = (o: any) => o?.name || o?.displayName || o?.email || o?.username || o?.uid
 
 function ChatRoom() {
-    const elemRef = useRef();
     const messagesRef = collection(firestore, 'messages');
     let q = query(messagesRef, orderBy('createdAt'));
 

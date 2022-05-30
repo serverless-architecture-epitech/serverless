@@ -1,10 +1,10 @@
 import { getAuth, createUserWithEmailAndPassword, sendEmailVerification, updateProfile } from "firebase/auth";
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback } from 'react';
 import { toast } from 'react-toastify';
 import { StyledAuthForm, StyledButton, StyledContainer, StyledInput, StyledRedirectLink } from 'src/components/styled';
 import {addDoc, collection, getFirestore} from "firebase/firestore";
 
-export default () => {
+const Register = () => {
     // a react callback function to login with firebase called login
     const register = useCallback<React.FormEventHandler<HTMLFormElement>>(async (e) => {
         e.preventDefault();
@@ -62,3 +62,5 @@ export default () => {
     </StyledContainer>
     );
 }
+
+export default Register;

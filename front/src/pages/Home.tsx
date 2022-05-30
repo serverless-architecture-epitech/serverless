@@ -1,19 +1,14 @@
-import { getAuth, sendEmailVerification } from "firebase/auth";
+import { sendEmailVerification } from "firebase/auth";
 import { useState } from "react";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import { StyledContainer } from "src/components/styled";
 import useAuth from "src/utils/useAuth";
 import styled from "styled-components";
-import { getStorage } from 'firebase/storage';
-import { ref, getDownloadURL, uploadBytesResumable } from "firebase/storage";
 import FileList from "src/components/FileList";
-import Upload from "src/components/Upload";
-import Button from "../components/Button";
-// @ts-ignore
-import {Link, Navigate, Redirect} from "react-router-dom";
+import Sidebar from "src/components/Sidebar";
 
-const EmailVerify = () => {
+export const EmailVerify = () => {
     const user = useAuth();
     const [sent, setSent] = useState(false);
 
@@ -47,7 +42,7 @@ const EmailVerify = () => {
     );
 }
 
-export default () => {
+const Home = () => {
     const user = useAuth();
 
     if (!user) {
@@ -60,13 +55,7 @@ export default () => {
 
     return (
         <StyledApp>
-            <Sidebar>
-                <LogoutButton onClick={() => {
-                    const auth = getAuth();
-                    auth.signOut();
-                }}>Logout</LogoutButton>
-                <Button as={Link} to={'/chat'}>Chat</Button>
-            </Sidebar>
+            <Sidebar />
             <Container>
                 <Email>
                     connected as : <b>{user?.email}</b>
@@ -83,43 +72,7 @@ const StyledApp = styled(StyledContainer)`
     justify-content: start;
 `
 
-const Sidebar = styled.div`
-    width: 200px;
-    height: 100%;
-    padding: 20px;
-    background-color: #f5f5f5;
-    border-right: 1px solid #e5e5e5;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-`
-
-const LogoutButton = styled.button`
-    // make it look like a dangerous button
-    background-color: /* red button */ #ff0000;
-    border: 1px solid #00000018;
-    color: white;
-    cursor: pointer;
-    padding: 10px 30px;
-    border-radius: 5px;
-    width: 100%;
-    align-self: flex-end;
-    justify-self: flex-end;
-    &:hover {
-        background-color: /* hover red button */ #cc0000;
-    }
-    font-size: 16px;
-`;
-
 const Email = styled.div`
-`;
-
-const UserProfileButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
 `;
 
 const Container = styled.div`
@@ -143,3 +96,5 @@ const EmailVerification = styled.button`
         background-color: #f5f5f5;
     }
 `;
+
+export default Home;
