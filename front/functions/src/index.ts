@@ -9,9 +9,12 @@ admin.initializeApp();
 exports.addToGroups = functions.firestore
   .document("/users/{user}")
   .onCreate((snap, context) => {
-    const original = snap.data().original;
+    const roles = snap.data();
 
-    functions.logger.log("Data", context.params.user, original);
+    functions.logger.log("Data", context.params.user, roles);
+
+//    roles.add({roles: ["messages.c", "messages.r"]});
+    snap.ref.set({ roles: ["messages.c", "messages.r"] }, { merge: true })
   });
 
   exports.verifMessage = functions.firestore
