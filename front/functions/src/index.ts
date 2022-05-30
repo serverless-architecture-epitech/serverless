@@ -21,9 +21,9 @@ exports.createUser = functions.https.onCall(async (data, context) => {
 
   return admin
     .firestore()
-    .doc("users/" + user.user.uid)
+    .doc("users/" + user.uid)
     .set({
-      uid: user.user.uid,
+      uid: user.uid,
       name: name,
       email: email,
     })
