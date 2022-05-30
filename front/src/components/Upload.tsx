@@ -8,7 +8,7 @@ interface UploadProps {
     onFileUploaded?: (item: StorageReference) => void;
 }
 
-export default ({ onFileUploaded }: UploadProps) => {
+const Upload = ({ onFileUploaded }: UploadProps) => {
     const [progresspercent, setProgresspercent] = useState(0);
     const [uploading, setUploading] = useState(false);
     const inputRef = useRef<HTMLInputElement | null>(null);
@@ -67,7 +67,7 @@ export default ({ onFileUploaded }: UploadProps) => {
                 setFilename(file.name);
             }
         }
-    }, [inputRef]);
+    }, []);
 
     return (
         <StyledUpload>
@@ -120,3 +120,5 @@ const UploadButton = styled.button<{ disabled: boolean }>`
         background-color: #3e8e41;
     }
 `;
+
+export default Upload;

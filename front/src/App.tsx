@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { initializeApp } from "firebase/app";
 import { BrowserRouter, Navigate, Route, Routes } from 'react-router-dom';
-import { createBrowserHistory } from 'history';
 import Home from 'src/pages/Home';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -21,7 +20,7 @@ const firebaseConfig = {
 
 // Initialize Firebase
 
-const app = initializeApp(firebaseConfig);
+initializeApp(firebaseConfig);
 
 function App() {
   const auth = useAuth();

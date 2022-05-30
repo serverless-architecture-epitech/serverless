@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { listAll, getStorage, ref, ListResult, StorageReference, getDownloadURL, deleteObject } from "firebase/storage";
 import useAuth from "src/utils/useAuth";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCloudDownloadAlt, faDownload, faShareAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
+import { faCloudDownloadAlt, faShareAlt, faTrashAlt } from '@fortawesome/free-solid-svg-icons'
 import Upload from "./Upload";
 import { toast } from "react-toastify";
 
@@ -71,7 +71,7 @@ const Actions = styled.div`
     }
 `;
 
-export default () => {
+const FileList = () => {
     const [list, setList] = useState<ListResult>();
     const auth = useAuth();
 
@@ -110,3 +110,5 @@ const StyledList = styled.ul`
 const StyledTitle = styled.h2`
     margin: 20px 0;
 `;
+
+export default FileList;

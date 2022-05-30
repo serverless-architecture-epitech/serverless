@@ -1,11 +1,10 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useState} from 'react';
 import '../styles/Channel.css';
 
 import firebase from 'firebase/compat/app';
 import 'firebase/compat/firestore';
 import 'firebase/compat/auth';
 
-import { useAuthState } from 'react-firebase-hooks/auth';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import styled from "styled-components";
 
@@ -17,7 +16,8 @@ const firebaseConfig = {
     messagingSenderId: "305705479418",
     appId: "1:305705479418:web:da10279c3d3d77b32aed43"
 };
-const app = firebase.initializeApp(firebaseConfig);
+
+firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const firestore = firebase.firestore();
@@ -38,7 +38,6 @@ function Channel() {
 const getUsername = (o: any) => o?.displayName || o?.email || o?.username || o?.uid
 
 function ChatRoom() {
-    const dummy = useRef();
     const messagesRef = firestore.collection('messages');
     let query = messagesRef.orderBy('createdAt').limit(25);
 
@@ -81,7 +80,7 @@ function ChatRoom() {
 
 // @ts-ignore
 function ChatMessage(props) {
-    const { text, uid, username } = props.message;
+    const { text, uid } = props.message;
 
     // @ts-ignore
     const messageClass = uid === auth.currentUser.uid ? 'sent' : 'received';

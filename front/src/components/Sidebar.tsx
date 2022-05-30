@@ -2,19 +2,32 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import Button from "./Button";
 import { getAuth } from 'firebase/auth';
+import useAuth from "src/utils/useAuth";
+import { useEffect } from "react";
 
-export default () => {
-    return <Sidebar>
+const Sidebar = () => {
+    const user = useAuth();
+
+    useEffect(() => {
+        if (user) {
+            user.getIdTokenResult().then(idTokenResult => {
+                console.log(idTokenResult);
+                // setAdmin();
+            });
+        }
+    }, [user]);
+
+    return <StyledSidebar>
         <LogoutButton onClick={() => {
             const auth = getAuth();
             auth.signOut();
         }}>Logout</LogoutButton>
         <SidebarButton as={Link} to={'/'}>Upload</SidebarButton>
         <SidebarButton as={Link} to={'/chat'}>Chat</SidebarButton>
-    </Sidebar>
+    </StyledSidebar>
 }
 
-const Sidebar = styled.div`
+const StyledSidebar = styled.div`
     width: 200px;
     height: 100%;
     padding: 20px;
@@ -56,3 +69,5 @@ const SidebarButton = styled(Button)`
         background-color: #f5f5f5;
     }
 `
+
+export default Sidebar;

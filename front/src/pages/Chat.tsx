@@ -1,7 +1,3 @@
-import { sendEmailVerification } from "firebase/auth";
-import { useState } from "react";
-import { useCallback } from "react";
-import { toast } from "react-toastify";
 import { StyledContainer } from "src/components/styled";
 import useAuth from "src/utils/useAuth";
 import styled from "styled-components";
@@ -9,7 +5,7 @@ import Channel from "src/components/Channel";
 import Sidebar from "src/components/Sidebar";
 import { EmailVerify } from "./Home";
 
-export default () => {
+const Chat = () => {
 	const user = useAuth();
 
 	if (!user) {
@@ -48,17 +44,4 @@ const Container = styled.div`
     box-sizing: border-box;
 `;
 
-const EmailVerification = styled.button`
-    background-color: #fff;
-    border: 1px solid #00000018;
-    border-radius: 4px;
-    padding: 10px;
-    cursor: pointer;
-    color: #000;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 20px;
-    &:hover {
-        background-color: #f5f5f5;
-    }
-`;
+export default Chat;

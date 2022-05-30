@@ -42,7 +42,7 @@ export const EmailVerify = () => {
     );
 }
 
-export default () => {
+const Home = () => {
     const user = useAuth();
 
     if (!user) {
@@ -75,14 +75,6 @@ const StyledApp = styled(StyledContainer)`
 const Email = styled.div`
 `;
 
-const UserProfileButton = styled.div`
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 20px;
-`;
-
 const Container = styled.div`
     flex: 1;
     height: 100%;
@@ -104,3 +96,5 @@ const EmailVerification = styled.button`
         background-color: #f5f5f5;
     }
 `;
+
+export default Home;
