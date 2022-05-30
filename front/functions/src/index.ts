@@ -16,16 +16,14 @@ exports.createUser = functions.https.onCall(async (data, context) => {
     password: password,
     displayName: name,
   });
-  //  const user = await createUserWithEmailAndPassword(admin.auth(), email, password);
-  admin.auth().sendEmailVerification(user.user);
 
   functions.logger.log("User", user);
 
   return admin
     .firestore()
-    .doc("users/" + user.user.uid)
+    .doc("users/" + user.uid)
     .set({
-      uid: user.user.uid,
+      uid: user.uid,
       name: name,
       email: email,
     })
